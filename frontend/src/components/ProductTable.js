@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { fetchProducts } from "../services/ProductService";
 
-function ProductTable({ onEditClick, refresh }) {
+function ProductTable({ onEditClick, refresh, triggerRefresh }) {
   const [products, setProducts] = useState([]);
   const [filtered, setFiltered] = useState([]);
 
@@ -54,6 +54,7 @@ function ProductTable({ onEditClick, refresh }) {
       axios.put(`http://localhost:8080/products/${id}/deactivate`)
         .then(() => {
           alert("The product has been deleted (deactivated).");
+          triggerRefresh();
         })
         .catch((err) => {
           alert("Error while deleting");

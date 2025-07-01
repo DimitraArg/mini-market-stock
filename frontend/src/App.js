@@ -32,6 +32,7 @@ function App() {
       <ProductTable
         onEditClick={(product) => setEditingProduct(product)}
         refresh={refresh}
+        triggerRefresh={triggerRefresh} 
       />
 
       <div style={{ display: "flex", gap: "2rem", marginTop: "2rem" }}>
@@ -39,8 +40,14 @@ function App() {
         <SupplierMan refresh={refresh} triggerRefresh={triggerRefresh}/>
       </div>
 
-      <TransactionForm transaction={editingTransaction} clearEdit={() => setEditingTransaction(null)} onSave={triggerRefresh} />
-      <TransactionTable refresh={refresh} onEditClick={setEditingTransaction} />  
+      <TransactionForm
+        transaction={editingTransaction}
+        clearEdit={() => setEditingTransaction(null)}
+        onSave={triggerRefresh}
+        refresh={refresh} />
+      <TransactionTable refresh={refresh}
+        triggerRefresh={triggerRefresh}
+        onEditClick={setEditingTransaction} />  
     </div>
   );
 }

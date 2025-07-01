@@ -62,9 +62,9 @@ public class ProductServTest {
     @Test
     public void testUpdateProduct() {
         Product p = new Product();
-        p.setId(5); 
+        p.setId(5);
+        when(productAcc.findById(5)).thenReturn(p);
         productServ.updateProduct(p);
-        assertEquals(5, p.getId());
         verify(productAcc).update(p);
     }
 

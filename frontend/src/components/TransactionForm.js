@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-function TransactionForm({ transaction, clearEdit, onSave }) {
+function TransactionForm({ transaction, clearEdit, onSave, refresh }) {
   const [products, setProducts] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
   const [formData, setFormData] = useState({
@@ -19,7 +19,7 @@ function TransactionForm({ transaction, clearEdit, onSave }) {
     axios.get("http://localhost:8080/suppliers?active=true")
       .then(res => setSuppliers(res.data))
       .catch(err => console.error("Supplier load error", err));
-  }, []);
+  }, [refresh]);
 
   useEffect(() => {
     if (transaction) {

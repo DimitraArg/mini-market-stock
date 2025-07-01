@@ -57,6 +57,8 @@ public class ProductServ {
     }
 
     public void updateProduct(Product p) {
+        Product existing = getProductById(p.getId());
+        p.setQuantity(existing.getQuantity()); 
         prodAcc.update(p);
     }
 

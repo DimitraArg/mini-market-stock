@@ -43,7 +43,9 @@ function ProductForm({ product, clearEdit, onSave }) {
     };
 
     const method = product ? "put" : "post";
-    const url = product ? `http://localhost:8080/products/${product.id}` : "http://localhost:8080/products";
+    const url = product
+      ? `http://localhost:8080/products/${product.id}`
+      : "http://localhost:8080/products";
 
     axios[method](url, payload)
       .then(() => {
@@ -53,10 +55,28 @@ function ProductForm({ product, clearEdit, onSave }) {
         onSave && onSave();
       })
       .catch(err => {
-        alert("Save error");
-        console.error("Error:", err);
+        const msg = err.response?.data;
+
+        if (typeof msg === "string" && msg.startsWith("INACTIVE_EXISTS:")) {
+          const id = msg.split(":")[1];
+
+          if (window.confirm("This product was previously deleted. Reactivate it?")) {
+            axios.put(`http://localhost:8080/products/${id}/reactivate`)
+              .then(() => {
+                alert("Product reactivated.");
+                setFormData({ name: "", barcode: "", price: 0, vat: 0, categoryId: "" });
+                clearEdit && clearEdit();
+                onSave && onSave();
+              })
+              .catch(() => alert("Failed to reactivate product."));
+          }
+        } else {
+          alert("Save error");
+          console.error("Error:", err);
+        }
       });
   };
+
 
   return (
     <form onSubmit={handleSubmit}>

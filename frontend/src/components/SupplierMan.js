@@ -34,7 +34,7 @@ function SupplierMan({ refresh, triggerRefresh }) {
 
     const payload = {
       name: name.trim(),
-      phone: phone.trim(),
+      phone: (phone || "").toString().trim(),
       email: email.trim()
     };
 

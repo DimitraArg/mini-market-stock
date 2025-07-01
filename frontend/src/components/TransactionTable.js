@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-function TransactionTable({ refresh, onEditClick, onSave }) {
+function TransactionTable({ refresh, onEditClick, onSave, triggerRefresh }) {
   const [transactions, setTransactions] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [products, setProducts] = useState([]);
@@ -68,6 +68,7 @@ function TransactionTable({ refresh, onEditClick, onSave }) {
         .then(() => {
           alert("Transaction deactivated.");
           onSave && onSave();
+          triggerRefresh();
         })
         .catch(err => {
           alert("Error deactivating transaction");
@@ -159,10 +160,10 @@ function TransactionTable({ refresh, onEditClick, onSave }) {
 
       <div style={{ marginTop: "1rem", fontWeight: "bold" }}>
         <span style={{ color: "green", marginRight: 20 }}>
-          Total Income (IN): {totalIncome.toFixed(2)} €
+          Total Income : {totalIncome.toFixed(2)} €
         </span>
         <span style={{ color: "red" }}>
-          Total Expense (OUT): {totalExpense.toFixed(2)} €
+          Total Expense : {totalExpense.toFixed(2)} €
         </span>
       </div>
     </div>
